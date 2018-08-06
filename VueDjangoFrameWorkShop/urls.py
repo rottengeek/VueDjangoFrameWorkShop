@@ -18,11 +18,31 @@ from django.urls import path,re_path, include
 from extra_apps import xadmin
 from django.views.static import serve
 from VueDjangoFrameWorkShop.settings import MEDIA_ROOT
+from rest_framework.documentation import include_docs_urls
+from rest_framework.routers import DefaultRouter
+
+from goods.views import GoodsListViewSet
+
+router = DefaultRouter()
+
+# 配置goods的url
+router.register(r'goods', GoodsListViewSet)
+
+
+
+
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
     path('xadmin/', xadmin.site.urls),
     path('ueditor/', include('DjangoUeditor.urls')),
+    # rest 登录的
+    path('api-auth/', include('rest_framework.urls')),
     # 处理图片显示的url,使用Django自带serve,传入参数告诉它去哪个路径找，我们有配置好的路径MEDIAROOT
     re_path('media/(?P<path>.*)', serve, {"document_root": MEDIA_ROOT }),
+
+
+    re_path('', include(router.urls)),
+
+    path('docs/', include_docs_urls(title='慕学生鲜文档'))
 ]
