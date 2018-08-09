@@ -23,6 +23,7 @@ class UserFav(models.Model):
         verbose_name_plural = verbose_name
 
         # 多个字段作为一个联合唯一索引
+        # 即不允许同一个user收藏同样的商品多次
         unique_together = ("user", "goods")
 
     def __str__(self):
