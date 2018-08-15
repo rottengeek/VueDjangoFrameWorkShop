@@ -17,18 +17,20 @@ from django.contrib import admin
 from django.urls import path, re_path, include
 from extra_apps import xadmin
 from django.views.static import serve
-from VueDjangoFrameWorkShop.settings import MEDIA_ROOT
+
+from django.views.generic import TemplateView
 from rest_framework.documentation import include_docs_urls
 from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken import views
 from rest_framework_jwt.views import obtain_jwt_token
 
-from goods.views import GoodsListViewSet, CategoryViewset
+from goods.views import GoodsListViewSet, CategoryViewset, HotSearchsViewset
 from users.views import SmsCodeViewset, UserViewset
-from user_operation.views import UserFavViewset
-
-
-
+from user_operation.views import UserFavViewset, LeavingMessageViewset, AddressViewset
+from trade.views import ShoppingCartViewset, OrderViewset
+from trade.views import AlipayView
+from VueDjangoFrameWorkShop.settings import MEDIA_ROOT
+#STATIC_ROOT
 
 router = DefaultRouter()
 
@@ -37,6 +39,9 @@ router.register(r'goods', GoodsListViewSet, base_name="goods")
 
 # 配置Category的url
 router.register(r'categorys', CategoryViewset, base_name="categorys")
+
+# 热搜词
+router.register(r'hotsearchs', HotSearchsViewset, base_name="hotsearchs")
 
 # 配置codes的url
 router.register(r'codes', SmsCodeViewset, base_name="codes")
@@ -47,7 +52,17 @@ router.register(r'users', UserViewset, base_name="users")
 # 配置用户收藏的url
 router.register(r'userfavs', UserFavViewset, base_name="userfavs")
 
+# 配置用户留言的url
+router.register(r'messages', LeavingMessageViewset, base_name="messages")
 
+# 收货地址
+router.register(r'address', AddressViewset, base_name="address")
+
+# 购物车
+router.register(r'shopcarts', ShoppingCartViewset, base_name="shopcarts")
+
+# 订单相关url
+router.register(r'orders', OrderViewset, base_name="orders")
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
@@ -60,6 +75,10 @@ urlpatterns = [
 
     re_path('^', include(router.urls)),
 
+    # 首页
+    path('index/', TemplateView.as_view(template_name='index.html'), name='index'),
+    # re_path('static/(?P<path>.*)', serve, {"document_root": STATIC_ROOT}),
+
     path('docs/', include_docs_urls(title='慕学生鲜文档')),
 
     # drf 自带的token认证模式
@@ -67,4 +86,8 @@ urlpatterns = [
 
     # jwt的认证接口
     path('login/', obtain_jwt_token),
+
+    # 支付宝支付相关接口
+    path('alipay/return/', AlipayView.as_view(), name='alipay')
+
 ]

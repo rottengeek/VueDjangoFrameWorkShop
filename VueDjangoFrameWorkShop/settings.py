@@ -28,7 +28,7 @@ SECRET_KEY = 'w2wv#1*m0^xp#7_=#%)ir5k8b7zf#f$(lk5t(b+we(7!(n7vwt'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 AUTHENTICATION_BACKENDS = (
     'users.views.CustomBackend',
@@ -104,7 +104,7 @@ DATABASES = {
         'NAME': 'mxshop',
         'USER': 'root',
         'PASSWORD': '123456',
-        'HOST': '127.0.0.1',
+        'HOST': '47.96.124.190',
         "OPTIONS": {"init_command": "SET default_storage_engine=INNODB;"}
     }
 }
@@ -144,6 +144,11 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+
 
 # 设置上传文件，图片访问路径
 MEDIA_URL = '/media/'
@@ -191,3 +196,7 @@ REGEX_MOBILE = "^1[358]\d{9}$|^147\d{8}$|^176\d{8}$"
 
 # 云片网设置
 APIKEY = '4c5d740aa2f4dc8d8377cc57e6ee5ab1'
+
+# 支付宝相关的key路径
+private_key_path = os.path.join(BASE_DIR, 'apps/trade/keys/private_2048.txt')
+ali_pub_key_path = os.path.join(BASE_DIR, 'apps/trade/keys/alipay_key_2048.txt')

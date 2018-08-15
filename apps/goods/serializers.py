@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from goods.models import Goods, GoodsCategory, GoodsImage
+from goods.models import Goods, GoodsCategory, GoodsImage, HotSearchWords
 
 
 class CategorySerializer3(serializers.ModelSerializer):
@@ -46,5 +46,7 @@ class GoodsSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class HotWordSerializer:
-    pass
+class HotWordsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = HotSearchWords
+        fields = "__all__"
