@@ -24,13 +24,14 @@ from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken import views
 from rest_framework_jwt.views import obtain_jwt_token
 
-from goods.views import GoodsListViewSet, CategoryViewset, HotSearchsViewset
+from goods.views import GoodsListViewSet, CategoryViewset, HotSearchsViewset, BannerViewset, IndexCategoryViewset
 from users.views import SmsCodeViewset, UserViewset
 from user_operation.views import UserFavViewset, LeavingMessageViewset, AddressViewset
 from trade.views import ShoppingCartViewset, OrderViewset
 from trade.views import AlipayView
 from VueDjangoFrameWorkShop.settings import MEDIA_ROOT
-#STATIC_ROOT
+
+# STATIC_ROOT
 
 router = DefaultRouter()
 
@@ -64,6 +65,12 @@ router.register(r'shopcarts', ShoppingCartViewset, base_name="shopcarts")
 # 订单相关url
 router.register(r'orders', OrderViewset, base_name="orders")
 
+# 首页banner轮播图url
+router.register(r'banners', BannerViewset, base_name="banners")
+
+# 首页系列商品展示url
+router.register(r'indexgoods', IndexCategoryViewset, base_name="indexgoods")
+
 urlpatterns = [
     # path('admin/', admin.site.urls),
     path('xadmin/', xadmin.site.urls),
@@ -88,6 +95,6 @@ urlpatterns = [
     path('login/', obtain_jwt_token),
 
     # 支付宝支付相关接口
-    path('alipay/return/', AlipayView.as_view(), name='alipay')
+    path('alipay/return/', AlipayView.as_view(), name='alipay'),
 
 ]

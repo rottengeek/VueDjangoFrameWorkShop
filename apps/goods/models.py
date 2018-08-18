@@ -87,6 +87,7 @@ class Goods(models.Model):
         return self.name
 
 
+
 class GoodsImage(models.Model):
     """
     商品详情页轮播图
